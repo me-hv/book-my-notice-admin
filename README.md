@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Book My Notice Admin
 
-## Getting Started
+Admin dashboard foundation for a newspaper advertisement booking platform.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Next.js 15 App Router
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Firebase Authentication
+- Firebase Firestore
+- Cloudflare R2
+- TanStack Query
+- Lucide Icons
+
+## Folder Structure
+
+```txt
+src/
+  app/
+    (auth)/login/             Public login route
+    (admin)/                  Protected dashboard route group
+    api/auth/                 Session creation and logout route handlers
+    providers.tsx             React Query and shared app providers
+  features/
+    auth/                     Login, logout, current admin helpers
+    bookings/                 Booking repository module
+    customers/                Customer repository module
+    dashboard/                Dashboard overview components
+    layout/                   Sidebar, top nav, admin layout shell
+    newspapers/               Newspaper repository module
+    pricing/                  Pricing rule repository module
+  shared/
+    components/               Reusable page and state components
+    constants/                Route and navigation definitions
+    lib/
+      auth/                   Signed admin session helpers
+      firebase/               Client and Admin SDK initialization
+      r2/                     Cloudflare R2 S3-compatible client
+    repositories/             Base and Firestore repository abstractions
+    types/                    Type-safe Firestore collection models
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Authentication Flow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Staff opens `/login`.
+2. The login form uses Firebase Email/Password Auth.
+3. The Firebase ID token is posted to `/api/auth/session`.
+4. The API verifies the token with Firebase Admin SDK.
+5. The API reads `adminUsers/{uid}` from Firestore.
+6. Only active admin users with an allowed role receive an HTTP-only signed session cookie.
+7. Middleware protects `/dashboard`, `/bookings`, `/customers`, `/newspapers`, `/pricing`, and `/settings`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Expected Firestore admin document:
 
-## Learn More
+```json
+{
+  "email": "admin@bookmynotice.com",
+  "role": "SUPER_ADMIN",
+  "active": true
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Environment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Copy `.env.example` to `.env.local` and fill the values.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+For Firebase Admin, use either:
 
-## Deploy on Vercel
+- `FIREBASE_SERVICE_ACCOUNT_KEY` as base64 encoded service account JSON
+- Or `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, and `FIREBASE_PRIVATE_KEY`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`ADMIN_SESSION_SECRET` should be a long random string used to sign admin session cookies.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Firestore Collections
+
+Type definitions live in `src/shared/types/firestore.ts`.
+
+- `users`
+- `bookings`
+- `adminUsers`
+- `newspapers`
+- `pricingRules`
+
+Repository abstractions live in `src/shared/repositories`. Feature repositories compose the shared Firestore repository so future pages can add pagination, filters, and mutations without coupling UI to Firebase SDK calls.
+
+## Current Scope
+
+Implemented foundation only:
+
+- Project setup
+- Firebase integration
+- Authentication flow
+- Admin role verification
+- Protected routes
+- Dashboard layout
+- Sidebar and top navigation
+- Empty dashboard pages
+- Type-safe Firestore models
+- Repository pattern
+- Cloudflare R2 client setup
+
+Not implemented yet:
+
+- Payment systems
+- Invoices
+- Analytics
+- Publication workflows
+- Production booking tables or mutations
