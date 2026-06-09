@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 
+import { writeAuditLog } from "@/features/settings/repositories/settingsRepository";
 import { getFirebaseClient } from "@/shared/lib/firebase/client";
 import type { AdminRole, AdminUserDocument } from "@/shared/types/firestore";
 
@@ -134,6 +135,13 @@ export async function signInWithGoogle(): Promise<AuthenticatedAdmin> {
   const admin = await getActiveAdminForUser(credential.user);
 
   await createAdminServerSession(credential.user);
+  await writeAuditLog({
+    actorEmail: admin.email,
+    eventType: "LOGIN",
+    targetType: "adminUsers",
+    targetId: admin.uid,
+    message: "Admin signed in with Google",
+  });
 
   return admin;
 }

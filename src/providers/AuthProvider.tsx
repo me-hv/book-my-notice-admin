@@ -14,6 +14,7 @@ import {
   signInWithGoogle,
   type AuthenticatedAdmin,
 } from "@/lib/auth/google-auth";
+import { writeAuditLog } from "@/features/settings/repositories/settingsRepository";
 import { getFirebaseClient } from "@/shared/lib/firebase/client";
 
 type AuthContextValue = {
@@ -93,8 +94,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = useCallback(async () => {
     const { auth } = getFirebaseClient();
+    const actorEmail = admin?.email ?? user?.email ?? "local-admin";
+    const actorUid = admin?.uid ?? user?.uid;
 
     await Promise.allSettled([
+      writeAuditLog({
+        actorEmail,
+        eventType: "LOGOUT",
+        targetType: "adminUsers",
+        targetId: actorUid,
+        message: "Admin signed out",
+      }),
       signOut(auth),
       fetch("/api/auth/logout", {
         method: "POST",
@@ -103,7 +113,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setUser(null);
     setAdmin(null);
-  }, []);
+  }, [admin?.email, admin?.uid, user?.email, user?.uid]);
 
   const value = useMemo<AuthContextValue>(
     () => ({

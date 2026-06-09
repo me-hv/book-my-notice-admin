@@ -15,6 +15,9 @@ import type { AdminRole, AdminUserDocument } from "@/shared/types/firestore";
 
 const allowedRoles: AdminRole[] = [
   "SUPER_ADMIN",
+  "MANAGER",
+  "OPERATOR",
+  "SUPPORT",
   "ADMIN",
   "OPERATIONS",
   "VIEWER",

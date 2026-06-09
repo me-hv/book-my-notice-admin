@@ -1,4 +1,11 @@
-export type AdminRole = "SUPER_ADMIN" | "ADMIN" | "OPERATIONS" | "VIEWER";
+export type AdminRole =
+  | "SUPER_ADMIN"
+  | "MANAGER"
+  | "OPERATOR"
+  | "SUPPORT"
+  | "ADMIN"
+  | "OPERATIONS"
+  | "VIEWER";
 
 export type BookingStatus =
   | "DRAFT"

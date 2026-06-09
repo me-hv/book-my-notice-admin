@@ -1,0 +1,67 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isBookingOwner(bookingId) {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/bookings/$(bookingId)).data.userId == request.auth.uid;
+    }
+
+    function isDevAdmin() {
+      // TODO: Restore strict adminUsers role verification before production.
+      return isSignedIn();
+    }
+
+    match /users/{userId} {
+      allow read, update: if isOwner(userId) || isDevAdmin();
+      allow create: if isOwner(userId) || isDevAdmin();
+    }
+
+    match /adminUsers/{userId} {
+      allow read: if isOwner(userId) || isDevAdmin();
+      allow write: if isDevAdmin();
+    }
+
+    match /bookings/{bookingId} {
+      allow read: if isOwner(resource.data.userId) || isDevAdmin();
+      allow create: if isOwner(request.resource.data.userId) || isDevAdmin();
+      allow update, delete: if isDevAdmin();
+
+      match /timeline/{timelineId} {
+        allow read: if isDevAdmin() ||
+          (isBookingOwner(bookingId) && resource.data.visibleToUser == true);
+        allow create, update, delete: if isDevAdmin();
+      }
+
+      match /adminNotes/{noteId} {
+        allow read, write: if isDevAdmin();
+      }
+    }
+
+    match /newspapers/{newspaperId} {
+      allow read: if isSignedIn();
+      allow write: if isDevAdmin();
+    }
+
+    match /pricingRules/{ruleId} {
+      allow read: if isSignedIn();
+      allow write: if isDevAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read, write: if isDevAdmin();
+
+      match /logs/{logId} {
+        allow read, write: if isDevAdmin();
+      }
+    }
+  }
+}

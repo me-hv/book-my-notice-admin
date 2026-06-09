@@ -1,6 +1,4 @@
-import { BookMarked } from "lucide-react";
-
-import { EmptyState } from "@/shared/components/empty-state";
+import { BookingDetail } from "@/features/bookings/components/BookingDetail";
 import { PageHeader } from "@/shared/components/page-header";
 
 export default async function BookingDetailsPage({
@@ -13,15 +11,11 @@ export default async function BookingDetailsPage({
   return (
     <>
       <PageHeader
-        description="Foundation page for reviewing a single advertisement booking and related customer documents."
+        description="Review notice details, documents, pricing, notes, and status actions."
         title={`Booking ${id}`}
       />
       <div className="p-6 lg:p-8">
-        <EmptyState
-          description="Booking detail sections will connect to the typed bookings repository and document storage URLs in a later feature slice."
-          icon={BookMarked}
-          title="Booking detail shell is ready"
-        />
+        <BookingDetail bookingId={id} />
       </div>
     </>
   );

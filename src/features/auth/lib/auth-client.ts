@@ -5,6 +5,7 @@ import {
   signOut as firebaseSignOut,
 } from "firebase/auth";
 
+import { writeAuditLog } from "@/features/settings/repositories/settingsRepository";
 import { getFirebaseClient } from "@/shared/lib/firebase/client";
 
 export async function loginWithEmailAndPassword(
@@ -32,13 +33,23 @@ export async function loginWithEmailAndPassword(
     throw new Error(payload?.message ?? "Unable to create admin session.");
   }
 
-  return response.json() as Promise<{
+  const payload = (await response.json()) as {
     admin: {
       uid: string;
       email: string;
       role: string;
     };
-  }>;
+  };
+
+  await writeAuditLog({
+    actorEmail: payload.admin.email,
+    eventType: "LOGIN",
+    targetType: "adminUsers",
+    targetId: payload.admin.uid,
+    message: "Admin signed in with email and password",
+  });
+
+  return payload;
 }
 
 export async function logoutAdmin() {

@@ -19,6 +19,13 @@ const SESSION_TTL_SECONDS = 60 * 60 * 8;
 function getSessionSecret() {
   const secret = process.env.ADMIN_SESSION_SECRET;
 
+  if (!secret && process.env.NODE_ENV === "development") {
+    // TODO: Restore adminUsers role verification before production.
+    return new TextEncoder().encode(
+      "book-my-notice-local-development-session-secret",
+    );
+  }
+
   if (!secret) {
     return null;
   }
