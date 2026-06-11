@@ -519,7 +519,7 @@ export function BookingDetail({ bookingId }: { bookingId: string }) {
 
   if (bookingQuery.isLoading) {
     return (
-      <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">
+      <div className="rounded-lg border bg-card p-8 text-sm text-muted-foreground">
         Loading booking...
       </div>
     );
@@ -536,7 +536,7 @@ export function BookingDetail({ bookingId }: { bookingId: string }) {
 
   if (!booking) {
     return (
-      <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">
+      <div className="rounded-lg border bg-card p-8 text-sm text-muted-foreground">
         Booking not found.
       </div>
     );

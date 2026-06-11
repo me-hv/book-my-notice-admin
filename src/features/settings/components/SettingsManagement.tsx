@@ -151,7 +151,7 @@ function SettingToggle({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <label className="flex items-start gap-3 rounded-lg border bg-white p-4">
+    <label className="flex items-start gap-3 rounded-lg border bg-card p-4">
       <Checkbox
         checked={checked}
         onCheckedChange={(value) => onChange(value === true)}
@@ -343,7 +343,7 @@ function StaffManagement({
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-3 rounded-lg border bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 rounded-lg border bg-card p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="font-medium">Staff Management</h3>
           <p className="text-sm text-muted-foreground">
@@ -357,7 +357,7 @@ function StaffManagement({
         </Button>
       </div>
 
-      <div className="overflow-hidden rounded-lg border bg-white">
+      <div className="overflow-hidden rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/40 hover:bg-muted/40">
@@ -496,7 +496,7 @@ function RolePermissions({
       <CardContent className="space-y-4">
         <div className="grid gap-4 xl:grid-cols-2">
           {adminRoles.map((role) => (
-            <div className="rounded-lg border bg-white p-4" key={role}>
+            <div className="rounded-lg border bg-card p-4" key={role}>
               <h4 className="font-medium">{roleLabel(role)}</h4>
               <div className="mt-3 grid gap-2 sm:grid-cols-2">
                 {permissions.map((permission) => (
@@ -921,7 +921,7 @@ export function SettingsManagement() {
 
   if (settingsQuery.isLoading) {
     return (
-      <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">
+      <div className="rounded-lg border bg-card p-8 text-sm text-muted-foreground">
         Loading settings...
       </div>
     );
@@ -936,7 +936,7 @@ export function SettingsManagement() {
         </div>
       ) : null}
 
-      <div className="rounded-lg border bg-white p-4">
+      <div className="rounded-lg border bg-card p-4">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="font-medium">Administrative Control Center</h2>

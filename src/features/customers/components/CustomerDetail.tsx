@@ -73,7 +73,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
 
   if (customerQuery.isLoading) {
     return (
-      <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">
+      <div className="rounded-lg border bg-card p-8 text-sm text-muted-foreground">
         Loading customer...
       </div>
     );
@@ -92,7 +92,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
 
   if (!customer) {
     return (
-      <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">
+      <div className="rounded-lg border bg-card p-8 text-sm text-muted-foreground">
         Customer not found.
       </div>
     );
@@ -262,7 +262,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
               <div className="space-y-2">
                 {customer.documentsUploaded.map((document, index) => (
                   <div
-                    className="flex items-center justify-between gap-3 rounded-lg border bg-white p-3"
+                    className="flex items-center justify-between gap-3 rounded-lg border bg-card p-3"
                     key={`${document.url ?? document.name}-${index}`}
                   >
                     <div className="min-w-0">
@@ -307,7 +307,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
               <div className="space-y-2">
                 {customer.publishedNotices.map((booking) => (
                   <div
-                    className="rounded-lg border bg-white p-3"
+                    className="rounded-lg border bg-card p-3"
                     key={booking.id}
                   >
                     <div className="flex items-start justify-between gap-3">

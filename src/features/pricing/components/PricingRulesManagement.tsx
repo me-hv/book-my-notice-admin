@@ -719,7 +719,7 @@ function PricingSimulator({
 
 function SimulatorMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border bg-white p-3">
+    <div className="rounded-lg border bg-card p-3">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-1 text-sm font-semibold text-foreground">{value}</p>
     </div>
@@ -854,7 +854,7 @@ export function PricingRulesManagement() {
 
   if (pricingRulesQuery.isLoading || newspapersQuery.isLoading) {
     return (
-      <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">
+      <div className="rounded-lg border bg-card p-8 text-sm text-muted-foreground">
         Loading pricing rules...
       </div>
     );
@@ -873,7 +873,7 @@ export function PricingRulesManagement() {
     <div className="space-y-4">
       <PricingSimulator newspapers={newspapers} rules={pricingRules} />
 
-      <div className="rounded-lg border bg-white p-4">
+      <div className="rounded-lg border bg-card p-4">
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
           <div className="relative w-full xl:max-w-md">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -940,7 +940,7 @@ export function PricingRulesManagement() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-lg border bg-white">
+      <div className="overflow-hidden rounded-lg border bg-card">
         {filteredRules.length === 0 ? (
           <div className="p-8 text-sm text-muted-foreground">
             No pricing rules found.

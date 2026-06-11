@@ -9,7 +9,7 @@ import type { AdminSession } from "@/shared/lib/auth/session";
 
 export function TopNav({ admin }: { admin: AdminSession }) {
   return (
-    <header className="flex h-16 items-center gap-3 border-b bg-white px-4 lg:px-6">
+    <header className="flex h-16 items-center gap-3 border-b bg-card px-4 lg:px-6">
       <MobileSidebar />
       <div className="relative hidden w-full max-w-md sm:block">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />

@@ -6,8 +6,8 @@ export default function DashboardPage() {
     <>
       <PageHeader
         badge="Overview"
-        description="Live booking metrics from Firestore for the operations team."
-        title="Dashboard"
+        description="Monitor bookings, pricing, payment, and publication readiness from one operations command center."
+        title="Operations Dashboard"
       />
       <div className="p-6 lg:p-8">
         <OverviewCards />

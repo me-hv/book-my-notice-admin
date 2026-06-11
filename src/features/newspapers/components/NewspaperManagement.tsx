@@ -245,7 +245,7 @@ function ToggleDay({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <label className="flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-sm">
+    <label className="flex items-center gap-2 rounded-md border bg-card px-3 py-2 text-sm">
       <Checkbox
         checked={checked}
         onCheckedChange={(value) => onChange(value === true)}
@@ -260,7 +260,7 @@ function LogoMark({ newspaper }: { newspaper: NewspaperDocument }) {
     return (
       <div
         aria-label={`${newspaper.name ?? "Newspaper"} logo`}
-        className="size-10 rounded-md border bg-white bg-contain bg-center bg-no-repeat"
+        className="size-10 rounded-md border bg-card bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url("${newspaper.logoUrl}")` }}
       />
     );
@@ -1002,7 +1002,7 @@ export function NewspaperManagement() {
 
   if (newspapersQuery.isLoading) {
     return (
-      <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">
+      <div className="rounded-lg border bg-card p-8 text-sm text-muted-foreground">
         Loading newspapers...
       </div>
     );
@@ -1019,7 +1019,7 @@ export function NewspaperManagement() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-lg border bg-white p-4">
+      <div className="rounded-lg border bg-card p-4">
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
           <div className="relative w-full xl:max-w-md">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -1085,7 +1085,7 @@ export function NewspaperManagement() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-lg border bg-white">
+      <div className="overflow-hidden rounded-lg border bg-card">
         {filteredNewspapers.length === 0 ? (
           <div className="p-8 text-sm text-muted-foreground">
             No newspapers found.

@@ -124,7 +124,7 @@ export function CustomersList() {
 
   if (customersQuery.isLoading) {
     return (
-      <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">
+      <div className="rounded-lg border bg-card p-8 text-sm text-muted-foreground">
         Loading customers...
       </div>
     );
@@ -159,7 +159,7 @@ export function CustomersList() {
         />
       </div>
 
-      <div className="rounded-lg border bg-white p-4">
+      <div className="rounded-lg border bg-card p-4">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="relative w-full lg:max-w-md">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -176,7 +176,7 @@ export function CustomersList() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-lg border bg-white">
+      <div className="overflow-hidden rounded-lg border bg-card">
         {filteredCustomers.length === 0 ? (
           <div className="p-8 text-sm text-muted-foreground">
             No customers found.
