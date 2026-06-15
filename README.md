@@ -2,6 +2,20 @@
 
 Admin dashboard foundation for a newspaper advertisement booking platform.
 
+## Repository Branch
+
+The default branch for this repository is `master`.
+
+Use `master` in deployment tools such as Vercel, Netlify, GitHub Actions, or local Git commands unless you intentionally rename the branch later.
+
+Example:
+
+```bash
+git clone https://github.com/me-hv/book-my-notice-admin.git
+cd book-my-notice-admin
+git checkout master
+```
+
 ## Stack
 
 - Next.js 15 App Router
@@ -66,12 +80,33 @@ Expected Firestore admin document:
 
 Copy `.env.example` to `.env.local` and fill the values.
 
+```bash
+cp .env.example .env.local
+```
+
 For Firebase Admin, use either:
 
 - `FIREBASE_SERVICE_ACCOUNT_KEY` as base64 encoded service account JSON
 - Or `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, and `FIREBASE_PRIVATE_KEY`
 
 `ADMIN_SESSION_SECRET` should be a long random string used to sign admin session cookies.
+
+## Deployment Checklist
+
+Before deploying, set these environment variables in your hosting provider:
+
+- Public Firebase keys: `NEXT_PUBLIC_FIREBASE_API_KEY`, `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`, `NEXT_PUBLIC_FIREBASE_PROJECT_ID`, `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`, `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`, `NEXT_PUBLIC_FIREBASE_APP_ID`
+- Firebase Admin credentials: `FIREBASE_SERVICE_ACCOUNT_KEY` or `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY`
+- Session signing key: `ADMIN_SESSION_SECRET`
+- Cloudflare R2 keys: `R2_ENDPOINT`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`
+
+Recommended build command:
+
+```bash
+npm run build
+```
+
+If deployment fails with Turbopack-related build issues, temporarily change the build script from `next build --turbopack` to `next build` and redeploy.
 
 ## Firestore Collections
 
